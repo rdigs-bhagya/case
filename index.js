@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const database = require('./api/connection');
-const contactRoutes = require('./api/routes/ContactRoutes')
+const contactRoutes = require("./api/routes/ContactRoutes");
 const claimRoutes = require('./api/routes/Claim')
 
 app.use(express.urlencoded({ extended: true }));
