@@ -24,14 +24,14 @@ router.get('/', async (req, res) => {
 });
 
 // ✅ (Optional) Get a single contact by ID
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const contact = await Contact.findById(req.params.id);
-//     if (!contact) return res.status(404).json({ message: 'Contact not found' });
-//     res.status(200).json(contact);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+router.get('/:id', async (req, res) => {
+  try {
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) return res.status(404).json({ message: 'Contact not found' });
+    res.status(200).json(contact);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;
