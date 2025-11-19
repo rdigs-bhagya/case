@@ -7,6 +7,7 @@ const ClaimSchema = new mongoose.Schema(
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
+    xxTrustedFormCertUrl: { type: String },
     serviceAnswers: {
       type: [
         {
