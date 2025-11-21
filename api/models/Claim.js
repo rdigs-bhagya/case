@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ClaimSchema = new mongoose.Schema(
   {
@@ -7,7 +7,9 @@ const ClaimSchema = new mongoose.Schema(
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
+
     xxTrustedFormCertUrl: { type: String },
+
     serviceAnswers: {
       type: [
         {
@@ -15,11 +17,19 @@ const ClaimSchema = new mongoose.Schema(
           answer: { type: mongoose.Schema.Types.Mixed, required: true },
         },
       ],
-      _id: false, // No _id for each array item
+      _id: false,
+    },
+
+    // ⭐ NEW → Add client details safely
+    clientDetails: {
+      ipAddress: String,
+      browser: String,
+      os: String,
+      device: String,
+      location: Object,
     },
   },
   { timestamps: true }
 );
 
-const Claim =  mongoose.models.Claim || mongoose.model("Claim", ClaimSchema);
-module.exports = Claim;
+module.exports = mongoose.models.Claim || mongoose.model("Claim", ClaimSchema);
