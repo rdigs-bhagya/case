@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ContactSchema = new mongoose.Schema(
   {
@@ -9,9 +9,18 @@ const ContactSchema = new mongoose.Schema(
     message: { type: String, required: true },
     caseType: { type: String, required: true },
     xxTrustedFormCertUrl: { type: String },
+
+    // ⭐ Add client details here
+    clientDetails: {
+      ipAddress: String,
+      browser: String,
+      os: String,
+      device: String,
+      location: Object,
+    },
   },
   { timestamps: true }
 );
 
-const Contact = mongoose.model("Contact", ContactSchema);
-module.exports = Contact;
+module.exports =
+  mongoose.models.Contact || mongoose.model("Contact", ContactSchema);
