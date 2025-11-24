@@ -2,12 +2,30 @@ const express = require('express');
 const router = express.Router();
 const Contact = require('../models/contact');
 
-// ✅ Create a new contact
+// ✅ Create a new contact with tracking info
 router.post('/', async (req, res) => {
   try {
-    const contact = new Contact(req.body);
+
+    // ---- Tracking data collected from index.js middleware ----
+    const tracking = {
+      ip: req.clientIp,
+      deviceId: req.deviceId,
+      browser: req.userBrowser,
+      os: req.userOS,
+      latitude: req.body?.geo?.latitude || null,
+      longitude: req.body?.geo?.longitude || null,
+    };
+
+    // Merge tracking details into request body
+    const finalData = {
+      ...req.body,
+      trackingInfo: tracking
+    };
+
+    const contact = new Contact(finalData);
     await contact.save();
     res.status(201).json(contact);
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

@@ -2,12 +2,29 @@ const express = require('express');
 const Claim = require('../models/Claim');
 const router = express.Router();
 
-// ✅ CREATE Claim
+// ✅ CREATE Claim with tracking
 router.post('/', async (req, res) => {
   try {
-    const claim = new Claim(req.body);
+
+    // ---- Tracking data from index.js middleware ----
+    const tracking = {
+      ip: req.clientIp,
+      deviceId: req.deviceId,
+      browser: req.userBrowser,
+      os: req.userOS,
+      latitude: req.body?.geo?.latitude || null,
+      longitude: req.body?.geo?.longitude || null,
+    };
+
+    const finalData = {
+      ...req.body,
+      trackingInfo: tracking
+    };
+
+    const claim = new Claim(finalData);
     await claim.save();
     res.status(201).json(claim);
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

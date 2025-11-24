@@ -1,17 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const ContactSchema = new mongoose.Schema(
+const contactSchema = new mongoose.Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String, required: true },
-    message: { type: String, required: true },
-    caseType: { type: String, required: true },
-    xxTrustedFormCertUrl: { type: String },
+    // === Your Existing Fields ===
+    name: { type: String },
+    email: { type: String },
+    phone: { type: String },
+    message: { type: String },
+
+    // === NEW Tracking Info ===
+    trackingInfo: {
+      ip: { type: String },
+      deviceId: { type: String },
+      browser: { type: String },
+      os: { type: String },
+      latitude: { type: Number },
+      longitude: { type: Number }
+    }
   },
   { timestamps: true }
 );
 
-const Contact = mongoose.model("Contact", ContactSchema);
-module.exports = Contact;
+module.exports = mongoose.model("Contact", contactSchema);

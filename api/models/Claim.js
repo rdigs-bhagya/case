@@ -1,25 +1,25 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const ClaimSchema = new mongoose.Schema(
+const claimSchema = new mongoose.Schema(
   {
-    service: { type: String, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    email: { type: String, required: true },
-    phone: { type: String, required: true },
-    xxTrustedFormCertUrl: { type: String },
-    serviceAnswers: {
-      type: [
-        {
-          question: { type: String, required: true },
-          answer: { type: mongoose.Schema.Types.Mixed, required: true },
-        },
-      ],
-      _id: false, // No _id for each array item
-    },
+    // === Your Existing Claim Fields ===
+    name: { type: String },
+    email: { type: String },
+    phone: { type: String },
+    description: { type: String },
+    orderId: { type: String },
+
+    // === NEW Tracking Info ===
+    trackingInfo: {
+      ip: { type: String },
+      deviceId: { type: String },
+      browser: { type: String },
+      os: { type: String },
+      latitude: { type: Number },
+      longitude: { type: Number }
+    }
   },
   { timestamps: true }
 );
 
-const Claim =  mongoose.models.Claim || mongoose.model("Claim", ClaimSchema);
-module.exports = Claim;
+module.exports = mongoose.model("Claim", claimSchema);
