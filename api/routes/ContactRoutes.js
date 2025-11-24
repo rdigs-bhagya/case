@@ -1,43 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/contact');
-const UAParser = require('ua-parser-js');
-const geoip = require('geoip-lite');
 
-// ✅ Create a new contact + capture client details
+// ✅ Create a new contact
 router.post('/', async (req, res) => {
   try {
-    const body = req.body;
-
-    // ----------- Capture Client Details --------------
-    const userAgent = req.headers['user-agent'] || "";
-    const parser = new UAParser(userAgent);
-    const ua = parser.getResult();
-
-    const ip =
-      req.headers['x-forwarded-for']?.split(',')[0] ||
-      req.ip ||
-      req.connection.remoteAddress ||
-      'Unknown';
-
-    const location = geoip.lookup(ip) || {};
-
-    const clientDetails = {
-      ipAddress: ip,
-      browser: ua.browser?.name || "Unknown",
-      os: ua.os?.name || "Unknown",
-      device: ua.device?.type || "Desktop",
-      location,
-    };
-
-    // ----------- Save Contact Form --------------
-    const contact = new Contact({
-      ...body,
-      clientDetails,
-    });
-
+    const contact = new Contact(req.body);
     await contact.save();
-
     res.status(201).json(contact);
   } catch (err) {
     res.status(400).json({ error: err.message });
