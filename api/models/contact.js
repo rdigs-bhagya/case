@@ -10,6 +10,11 @@ const ContactSchema = new mongoose.Schema(
     caseType: { type: String, required: true },
     xxTrustedFormCertUrl: { type: String },
 
+    consent: {
+      type: Boolean,
+      default: false,
+    },
+
     // ⭐ Add client details here
     clientDetails: {
       ipAddress: String,
