@@ -15,11 +15,11 @@ const ContactSchema = new mongoose.Schema(
       default: false,
     },
 
-    // ⭐ NEW — Consent Text
+    // ⭐ NEW — must end with a comma!
     consentText: {
       type: String,
       default: "",
-    }
+    },
 
     // ⭐ Add client details here
     clientDetails: {
