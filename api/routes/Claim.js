@@ -41,6 +41,7 @@ router.post('/', async (req, res) => {
       clientDetails,
     });
 
+      console.log("✅ Saved Claim:", claim);
     await claim.save();
 
     res.status(201).json(claim);
