@@ -9,6 +9,11 @@ router.post('/', async (req, res) => {
   try {
     const body = req.body;
 
+     // ⭐ DEBUG: Check what frontend is sending
+    console.log("📩 Incoming Claim Body:", body);
+    console.log("📌 consent:", body.consent);
+    console.log("📌 consentText:", body.consentText);
+
     // ----------- Capture Client Details --------------
     const userAgent = req.headers['user-agent'] || "";
     const parser = new UAParser(userAgent);
