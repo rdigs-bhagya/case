@@ -11,7 +11,12 @@ const ClaimSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    // ⭐ NEW — Consent Text
+    consentText: {
+      type: String,
+      default: "",
+    },
+    
     xxTrustedFormCertUrl: { type: String },
 
     serviceAnswers: {

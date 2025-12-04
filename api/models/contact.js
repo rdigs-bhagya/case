@@ -15,6 +15,12 @@ const ContactSchema = new mongoose.Schema(
       default: false,
     },
 
+    // ⭐ NEW — Consent Text
+    consentText: {
+      type: String,
+      default: "",
+    }
+
     // ⭐ Add client details here
     clientDetails: {
       ipAddress: String,
