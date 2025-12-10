@@ -1,25 +1,30 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const database = require("./api/connection");
-const contactRoutes = require("./api/routes/ContactRoutes");
-const claimRoutes = require("./api/routes/Claim");
-
 const cors = require("cors");
 
-// Middleware
+// DB Connection
+require("./api/connection");
+
+// Routes
+const contactRoutes = require("./api/routes/ContactRoutes");
+const claimRoutes = require("./api/routes/Claim");
+const sendMailRoutes = require("./api/routes/sendMail.js"); 
+
+// ------------------------------
+// MIDDLEWARES
+// ------------------------------
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-// CORS Headers
+// CORS HEADERS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
 
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "*");
@@ -65,27 +70,32 @@ app.use((req, res, next) => {
   next();
 });
 
-// Default Route
+// ------------------------------
+// DEFAULT ROUTE
+// ------------------------------
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Claim Your Claim API." });
 });
 
-// API Routes
+// ------------------------------
+// API ROUTES
+// ------------------------------
+app.use("/sendMail", sendMailRoutes);
 app.use("/contact", contactRoutes);
 app.use("/claims", claimRoutes);
 
-// Error Handling
+// ------------------------------
+// ERROR HANDLER
+// ------------------------------
 app.use((req, res, next) => {
-  const error = new Error("Not found");
-  error.status = 404;
-  next(error);
+  res.status(404).json({ error: "Not found" });
 });
 
 app.use((error, req, res, next) => {
-  console.log(error);
+  console.error(error);
   res.status(error.status || 500).json({
     error: {
-      message: error.message,
+      message: error.message || "Internal Server Error",
     },
   });
 });
