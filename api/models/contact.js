@@ -8,6 +8,11 @@ const ContactSchema = new mongoose.Schema(
     phone: { type: String, required: true },
     message: { type: String, required: true },
     caseType: { type: String, required: true },
+     hasLawyer: {
+      type: String,
+      enum: ["Yes", "No"],
+      required: true,
+    },
     xxTrustedFormCertUrl: { type: String },
 
     consent: {
