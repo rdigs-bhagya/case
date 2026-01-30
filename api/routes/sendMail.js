@@ -16,7 +16,7 @@ const smtpAccounts = {
 
 // WEBSITE LINKS (add your actual links here)
 const websiteLinks = {
-  "Legalclaim": "https://www.claimyourclaims.com/",
+  "LegalClaim": "https://www.claimyourclaims.com/",
   "IdeaThon": "https://ideathon.com",
 };
 
