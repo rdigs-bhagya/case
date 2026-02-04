@@ -4,30 +4,26 @@ const nodemailer = require("nodemailer");
 
 // SMTP accounts - App Passwords stored in .env
 const smtpAccounts = {
-  "help@claimyourclaims.com": {
-    user: "help@claimyourclaims.com",
+  "bhagyashri@rdigs.com": {
+    user: "bhagyashri@rdigs.com",
     pass: process.env.BHAGYAS_PASS,
-  },
-  "bhagyashreepatil7498@gmail.com": {
-    user: "bhagyashreepatil7498@gmail.com",
-    pass: process.env.BHAGYA_PASS,
   },
 };
 
-// WEBSITE LINKS (add your actual links here)
-const websiteLinks = {
-  "LegalClaim": "https://www.claimyourclaims.com/",
-  "IdeaThon": "https://ideathon.com",
-};
+// ALLOWED WEBSITE LINKS (ONLY TWO)
+const allowedLinks = [
+  "https://www.claimyourclaims.com/",
+  "https://ideathon.com",
+];
 
 // -----------------------------
 // ✅ Send Email (POST)
 // -----------------------------
 router.post("/", async (req, res) => {
   try {
-    const { fromEmail, toEmail, website } = req.body;
+    const { fromEmail, toEmail, websiteLink } = req.body;
 
-    // Validate email
+    // Validate TO email
     if (!toEmail || !toEmail.includes("@")) {
       return res.status(400).json({ message: "Invalid TO email" });
     }
@@ -38,11 +34,10 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "Sender email not configured" });
     }
 
-    // Get website link
-    const selectedLink = websiteLinks[website];
-    if (!selectedLink) {
+    // Validate website link
+    if (!allowedLinks.includes(websiteLink)) {
       return res.status(400).json({
-        message: `Website '${website}' is not configured`,
+        message: "Website link not allowed",
       });
     }
 
@@ -55,12 +50,17 @@ router.post("/", async (req, res) => {
       },
     });
 
-    // Email HTML
+    // Email HTML (UNCHANGED STRUCTURE)
     const emailBody = `
       <p>Hello,</p>
-      <p>This mail is regarding your website: <strong>${website}</strong>.</p>
-      <p>Website Link: <a href="${selectedLink}" target="_blank">${selectedLink}</a></p>
-      <p>We wanted to inform you about the latest updates and improvements.</p>
+      <p>Please find the website link below:</p>
+      <p>
+        Website Link:
+        <a href="${websiteLink}" target="_blank">${websiteLink}</a>
+      </p>
+      <p>
+        We wanted to inform you about the latest updates and improvements.
+      </p>
       <p>If you have any questions, feel free to contact us.</p>
       <br/>
       <p>Thank you!<br/>Your Team</p>
@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
     await transporter.sendMail({
       from: `"Your Team" <${fromEmail}>`,
       to: toEmail,
-      subject: `Website Update - ${website}`,
+      subject: "Website Update",
       html: emailBody,
     });
 
@@ -96,9 +96,13 @@ router.post("/", async (req, res) => {
   }
 });
 
+// -----------------------------
+// Health Check
+// -----------------------------
 router.get("/", (req, res) => {
   res.json({ message: "SendMail API working" });
 });
+
 // -----------------------------
 // Get list of Senders
 // -----------------------------
@@ -107,10 +111,10 @@ router.get("/senders", (req, res) => {
 });
 
 // -----------------------------
-// Get list of Websites
+// Get list of Allowed Links
 // -----------------------------
-router.get("/websites", (req, res) => {
-  res.status(200).json(websiteLinks);
+router.get("/links", (req, res) => {
+  res.status(200).json(allowedLinks);
 });
 
 module.exports = router;
