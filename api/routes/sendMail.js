@@ -12,8 +12,8 @@ const smtpAccounts = {
 
 // ALLOWED WEBSITE LINKS (ONLY TWO)
 const allowedLinks = [
-  "https://www.claimyourclaims.com/",
-  "https://ideathon.com",
+  "www.claimyourclaims.com/",
+  "www.casesettlementnow.com",
 ];
 
 // -----------------------------
