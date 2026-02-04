@@ -4,8 +4,8 @@ const nodemailer = require("nodemailer");
 
 // SMTP accounts - App Passwords stored in .env
 const smtpAccounts = {
-  "bhagyashri@rdigs.com": {
-    user: "bhagyashri@rdigs.com",
+  "help@claimyourclaims.com": {
+    user: "help@claimyourclaims.com",
     pass: process.env.BHAGYAS_PASS,
   },
 };
