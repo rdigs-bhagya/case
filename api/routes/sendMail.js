@@ -12,7 +12,7 @@ const smtpAccounts = {
 
 // ALLOWED WEBSITE LINKS (ONLY TWO)
 const allowedLinks = [
-  "https://www.claimyourclaims.com",
+  "www.claimyourclaims.com",
   "www.casesettlementnow.com",
 ];
 
