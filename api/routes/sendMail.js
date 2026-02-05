@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
-
+https://github.com/rdigs-bhagya/case/blob/main/api/routes/sendMail.js
 // SMTP accounts - App Passwords stored in .env
 const smtpAccounts = {
   "help@claimyourclaims.com": {
